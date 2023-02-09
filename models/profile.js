@@ -50,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: `Birth date is Required.`
         }
       } 
-     }
+     },
+     UserId:DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Profile',

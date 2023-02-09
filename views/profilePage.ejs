@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table, th, td {
+            padding: 10px;
+        }
+        button{padding: 10px;}
+    </style>
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Profile Picture</th>
+            <th>Gender</th>
+            <th>Birth Date</th>
+            <th>Action</th>
+        </tr>
+      
+            <tr>
+                <td><%= data.Profile.name %> <br> (<%= data.userName %>)</td>
+                <td><img src="<%= data.profilePicture %>" alt="" width="100px"></td>
+                <td><%= data.Profile.gender %></td>
+                <td><%= data.Profile.birthDate %></td>
+                <td>
+                    <button onclick="location.href='/profile/<%=data.id%>/edit'">Edit Profile</button>
+                </td>
+            </tr>
+        </table>
+        
+        <h1>Post</h1>
+        <button onclick="location.href='/profile/<%=data.id%>/posts/add'">Add Post</button> <br> <br>
+        <table border="1">
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Image</th>
+                <th>Tag</th>
+                <th>Action</th>
+            </tr>
+            <% data.Posts.forEach(post=>{ %>
+            <tr>
+                <td><%= post.title %></td>
+                <td><%= post.content %></td>
+                <td><img src="<%= post.imgUrl %>" alt="" width="100px"></td>
+                <td><%= post.Tag.name %></td>
+              
+                <td>
+                    <button onclick="location.href='/posts/<%=post.id%>/edit'">Edit Post</button>
+                    <button onclick="location.href='/posts/<%=post.id%>/delete'">Delete Post</button>
+                </td>
+                <% }) %>
+            </tr>
+       
+        </table>
+</body>
+</html>

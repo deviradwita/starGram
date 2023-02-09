@@ -63,10 +63,17 @@ module.exports = (sequelize, DataTypes) => {
           msg: `Role is Required.`
         }
       } 
-     }
+     },
+     profilePicture: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
   });
-  return User;
+
+  User.beforeCreate((User, options)=>{
+    if(!User.profilePicture){
+      User.profilePicture = "https://tinyurl.com/2fw6u9kh"
+     }
+  })
+  return User; 
 };

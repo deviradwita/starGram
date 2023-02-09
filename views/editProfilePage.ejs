@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h1>Edit Profile</h1>
+
+    <% data.forEach(el => { %>
+        <form action="/profile/<%= el.UserId %>/edit" method="post">
+            <div>
+            <label>Name</label>
+            <input type="text" name="name" value="<%= el.name %>">
+        </div>
+        
+        <div>
+            <label >Gender</label>
+            <select name="gender">
+                <option selected disabled>Choose..</option>
+                <option value="Male" <% el.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                <option value="Female" <% el.gender === 'Female' ? 'selected' : '' %>>Female</option>
+            </select>
+        </div>
+        <div>
+            <label>Birth Date</label>
+            <input type="date" name="birthDate" value="<%= formatDate(el.birthDate) %>">
+        </div>
+        
+        <div>
+            <label>Username</label>
+            <input type="text" name="userName" value="<%= el.User.userName %>">
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="email" name="email" value="<%= el.User.email %>">
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" name="password" value="<%= el.User.password %>">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <% }) %>
+</body>
+</html>

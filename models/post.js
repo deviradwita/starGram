@@ -16,18 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate :{
-        notEmpty:{
-          msg: `UserId is Required.`
-        },
-        notNull: {
-          msg: `UserId is Required.`
-        }
-      } 
-     },
+    UserId: DataTypes.INTEGER ,
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -41,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       } 
      },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate :{
         notEmpty:{

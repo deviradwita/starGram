@@ -3,12 +3,14 @@
       "userName": "bahemon27",
       "email" : "momon@mail.com",
       "password" : "12345",
-      "role": "Admin"
+      "role": "Admin",
+      "profilePicture":"https://tinyurl.com/3syd4dy5"
     },
     {
       "userName" : "choco123",
       "email" : "chocolate@gmail.com",
       "password" : "qwerty12",
-      "role": "User"
+      "role": "User",
+      "profilePicture":"https://tinyurl.com/5bwwp2t5"
     }
 ]

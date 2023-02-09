@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post</title>
+</head>
+<body>
+    <h1>Add New Post</h1>
+    <% data.forEach(el=>{%>   
+        <form action="/profile/<%= el.id %>/posts/add" method="post">
+            <div>
+                <label >Title</label>
+                <input type="text" name="title" >
+            </div>
+            <div>
+                <label >Content</label>
+                <input type="text" name="content" >
+            </div>
+            <div>
+                <label>Image Content</label>
+                <input type="text" name="imgUrl">
+            </div>
+            <div>
+                <label >Tag</label>
+                <select name="TagId">
+                    <option selected disabled>Choose..</option>
+                    <% tagData.forEach(tag => { %>
+                        <option value="<%= tag.id %>" >
+                            <%= tag.name %>
+                        </option>
+                        <% }) %>
+                    </select>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+            <%}) %>
+    </body>
+</html>

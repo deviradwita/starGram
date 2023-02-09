@@ -4,5 +4,32 @@
     },
     {
       "name" : "Food"
+    },
+    {
+      "name" : "Beauty"
+    },
+    {
+      "name" : "Sport"
+    },
+    {
+      "name" : "Art"
+    },
+    {
+      "name" : "Vacation"
+    },
+    {
+      "name" : "Automotive"
+    },
+    {
+      "name" : "Self Love"
+    },
+    {
+      "name" : "Love"
+    },
+    {
+      "name" : "Technology"
+    },
+    {
+      "name" : "Friendship"
     }
 ]
