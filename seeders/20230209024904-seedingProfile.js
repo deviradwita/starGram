@@ -1,4 +1,5 @@
 'use strict';
+const fs = require('fs')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -12,24 +13,14 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    return queryInterface.bulkInsert('Profiles',[
-      {
-        name : "John Doe",
-        gender: "Male",
-        birthDate: "1998-07-22",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        UserId: 1
-      },
-      {
-        name : "Jenna Doe",
-        gender: "Female",
-        birthDate: "1990-07-21",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        UserId: 2
-      }
-     ])
+    let data = fs.readFileSync('./data/profiles.json', 'utf-8')
+    data = JSON.parse(data)
+    data.map(el=>{
+      el.createdAt= new Date()
+      el.updatedAt= new Date()
+      return el
+   })
+   return queryInterface.bulkInsert('Profiles', data)
   },
 
   down (queryInterface, Sequelize) {

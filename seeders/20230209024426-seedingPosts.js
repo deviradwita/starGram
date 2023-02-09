@@ -1,5 +1,5 @@
 'use strict';
-
+const fs= require ('fs')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
    up (queryInterface, Sequelize) {
@@ -12,26 +12,14 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    return queryInterface.bulkInsert('Tags',[
-      {
-        UserId: 1,
-        title : "Main Music Di rumah",
-        content: "belajar main music via youtube, like ya!",
-        imgUrl: "https://tinyurl.com/2ts62cc9",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        TagId : 1
-      },
-      {
-        UserId: 2,
-        title : "belajar masak di kelas masak",
-        content: "mencoba hal baru di tahun baru",
-        imgUrl: "https://tinyurl.com/2ts62cc9",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        TagId : 2
-      }
-     ])
+    let data = fs.readFileSync('./data/posts.json', 'utf-8')
+    data = JSON.parse(data)
+    data.map(el=>{
+      el.createdAt= new Date()
+      el.updatedAt= new Date()
+      return el
+   })
+   return queryInterface.bulkInsert('Posts', data)
   },
 
  down (queryInterface, Sequelize) {
@@ -41,6 +29,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete('Tags', null, {})
+    return queryInterface.bulkDelete('Posts', null, {})
   }
 };

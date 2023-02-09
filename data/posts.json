@@ -2,14 +2,14 @@
   {
     "UserId": 1,
     "title": "Main Music Di rumah",
-    " content": "belajar main music via youtube, like ya!",
+    "content": "belajar main music via youtube, like ya!",
     "imgUrl": "https://tinyurl.com/2ts62cc9",
     "TagId": 1
   },
   {
     "UserId": 2,
     "title": "belajar masak di kelas masak",
-    " content": "mencoba hal baru di tahun baru",
+    "content": "mencoba hal baru di tahun baru",
     "imgUrl": "https://tinyurl.com/2ts62cc9",
     "TagId": 2
   }
