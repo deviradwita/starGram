@@ -45,15 +45,37 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate :{
         notEmpty:{
-          msg: `c is Required.`
+          msg: `Content is Required.`
         },
         notNull: {
-          msg: `Title is Required.`
+          msg: `Content is Required.`
         }
       } 
      },
-    imgUrl: DataTypes.STRING,
-    TagId: DataTypes.INTEGER
+    imgUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate :{
+        notEmpty:{
+          msg: `Image is Required.`
+        },
+        notNull: {
+          msg: `Image is Required.`
+        }
+      } 
+     },
+    TagId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate :{
+        notEmpty:{
+          msg: `TagId is Required.`
+        },
+        notNull: {
+          msg: `TagId is Required.`
+        }
+      } 
+     }
   }, {
     sequelize,
     modelName: 'Post',
