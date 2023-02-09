@@ -56,21 +56,12 @@ class Controller {
 
   //  ------------------ Register ------------------
   static renderRegisterUserPage(req, res) {
-    res.render('registerUserPage')
+    const errors = req.query.err
+    res.render('registerUserPage', {errors})
   }
 
   static handlerRegisterUserPage(req, res) {
     const { userName, email, password} = req.body;
-    
-    // let errors = {};
-
-    // if (!userName){
-    //   errors.name = "userName"
-    // }
-
-    // if(!password){
-    //   errors.name = "password"
-    // }
     
     User.create({
       userName,
@@ -81,46 +72,24 @@ class Controller {
         // res.send(data)
         res.redirect(`/registerProfile/${data.id}`);
       })
-      .catch((err) => res.send(err))
-    // // console.log(req.body)
-    // let UserId;
-    // Profile.create({name, gender, birthDate, UserId})
-    // .then(data =>{
-    //   // UserId = data[data.length-1].id + 1;
-    //   // res.send(data[data.length-1].id)
-    //   // console.log(data[data.length-1].id + 1)
-    //   UserId = data.id
-    //   // res.send(data)
-    //   // return User.findAll()
-    //   })
-    //   .then(data => {
-    //     let profile = Profile.create({
-    //       name,
-    //       gender,
-    //       birthDate,
-    //       UserId
-    //     })
-    //     res.send(profile)
-    //   })
-
-    //   // .then((data) =>{
-    //   //   UserId = data[data.length-1].id + 1;
-    //   //   return Profile.create({
-    //   //     name,
-    //   //     gender,
-    //   //     birthDate,
-    //   //     UserId
-    //   //   })
-    //   // })
-    //   // .then(() =>{
-    //   //   res.redirect('/posts')
-    //   // })
-    //   .catch(err => res.send(err))
+      .catch((err) => {
+        if(err.name === "SequelizeValidationError"){
+          const allErrors= err.errors.map(el=>el.message)
+          // console.log(allErrors);
+          // res.send(err)
+          res.redirect(`/registerUser?err=${allErrors}`)
+          // res.send(allErrors)
+      } else{
+          res.send(err)
+      }
+      })
   }
 
   static renderRegisterProfilePage(req,res){
     const {id} = req.params;
-    res.render('registerProfilePage', {id})
+    const errors = req.query.err
+
+    res.render('registerProfilePage', {id, errors})
   }
 
   static handlerRegisterProfilePage(req,res){
@@ -137,13 +106,22 @@ class Controller {
         res.redirect('/posts')
       })
       .catch(err =>{
-        res.send(err)
+        if(err.name === "SequelizeValidationError"){
+          const allErrors= err.errors.map(el=>el.message)
+          // console.log(allErrors);
+          // res.send(err)
+          res.redirect(`/registerProfile?err=${allErrors}`)
+          // res.send(allErrors)
+      } else{
+          res.send(err)
+      }
       })
   }
 
   // ------------------ Show All Post ------------------
   static renderPost(req,res){
     const {sort} = req.query;
+
 
     let option = {
       include: {
@@ -162,6 +140,8 @@ class Controller {
 
     let postData;
     Post.findAll(option)
+    // Post.getSortByTag(sort)
+    
     // User.findAll({
     //   include : {
     //     model: Post,
@@ -185,6 +165,8 @@ class Controller {
   static renderAddPost(req, res) {
     let data;
     const {id} = req.params
+    const errors = req.query.err
+
     Profile.findAll({
       where:{id}})
     .then(dataProfile=>{
@@ -194,7 +176,7 @@ class Controller {
     
     .then(tagData=>{
       // res.send(tagData)
-      res.render('addPost', {data, tagData})
+      res.render('addPost', {data, tagData, errors})
     })
     .catch(err => res.send(err))
   }
@@ -207,7 +189,17 @@ class Controller {
       UserId: id,title, content, imgUrl, TagId
     })
     .then(() => res.redirect(`/profile/${id}`))
-    .catch(err => res.send(err))
+    .catch(err => {
+      if(err.name === "SequelizeValidationError"){
+        const allErrors= err.errors.map(el=>el.message)
+        // console.log(allErrors);
+        // res.send(err)
+        res.redirect(`/profile/${id}/posts/add?err=${allErrors}`)
+        // res.send(allErrors)
+    } else{
+        res.send(err)
+    }
+    })
   }
 
   // ------------------ Get Profile ------------------
@@ -233,13 +225,15 @@ class Controller {
   // ------------------ Edit Profile ------------------
   static renderEditProfile(req,res){
     const {id} = req.params
+    const errors = req.query.err
+
     Profile.findAll({
       include: User,
       where: {UserId:id}
     })
       .then(data =>{
         // res.send(data)
-        res.render('editProfilePage', {data, formatDate})
+        res.render('editProfilePage', {data, formatDate, errors})
       })
       .catch(err => res.send(err))
   }
@@ -262,12 +256,24 @@ class Controller {
         })
       })
       .then(() => res.redirect(`/profile/${id}`))
-      .catch(err => res.send(err))
+      .catch(err => {
+        if(err.name === "SequelizeValidationError"){
+          const allErrors= err.errors.map(el=>el.message)
+          // console.log(allErrors);
+          // res.send(err)
+          res.redirect(`/profile/${id}/edit?err=${allErrors}`)
+          // res.send(allErrors)
+      } else{
+          res.send(err)
+      }
+      })
   }  
 
   // ------------------ Edit Post ------------------
   static renderEditPost(req, res) {
     const {id} = req.params;
+    const errors = req.query.err
+
     // res.send("helo");
     let postData;
     Post.findAll({
@@ -280,7 +286,7 @@ class Controller {
     })
     .then(tagData =>{
       // res.send(tagData)
-      res.render('editPostPage',{postData, tagData})
+      res.render('editPostPage',{postData, tagData, errors})
     })
     .catch(err => res.send(err))
     // res.render('editPost')
@@ -301,8 +307,15 @@ class Controller {
         res.redirect(`/profile/${id}`)
       })
       .catch(err => {
-        console.log(err, "<<<<<,,")
-        res.send(err)
+        if(err.name === "SequelizeValidationError"){
+          const allErrors= err.errors.map(el=>el.message)
+          // console.log(allErrors);
+          // res.send(err)
+          res.redirect(`/posts/${id}/edit?err=${allErrors}`)
+          // res.send(allErrors)
+      } else{
+          res.send(err)
+      }
       })
   }
 

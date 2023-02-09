@@ -39,6 +39,11 @@
                     <div id="login-box" class="col-md-12">
                         <form id="login-form" class="form" action="/registerProfile/<%= id %>" method="post">
                             <h3 class="text-center text-info">Set Up Profile</h3>
+
+                            <% if (errors) { %>
+                                <p style="color: red;"><%= errors %></p>
+                               <% } %>
+
                             <div class="form-group">
                                 <label class="text-info">Full Name:</label><br>
                                 <input type="text" name="name" class="form-control">

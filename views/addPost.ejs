@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Add New Post</h1>
+
+    <% if (errors) { %>
+        <p style="color: red;"><%= errors %></p>
+       <% } %>
+
     <% data.forEach(el=>{%>   
         <form action="/profile/<%= el.id %>/posts/add" method="post">
             <div>

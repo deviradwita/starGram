@@ -10,7 +10,6 @@ const profile = require('./profile')
 
 router.get('/', Controller.renderLandingPage);
 
-
 router.use(login);
 router.use(logout)
 router.use(register);

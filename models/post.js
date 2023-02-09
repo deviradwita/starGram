@@ -14,6 +14,24 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.User)
       Post.belongsTo(models.Tag)
     }
+
+    static getSortByTag(sort){
+      let option = {
+        include: {
+          model: 'User',
+          include: 'Profile'
+        } 
+      };
+      // console.log(sort);
+      if(sort){
+        option.where = {
+          // TagId: sort
+          TagId: { [Op.in]: [sort] }
+          // [Op.eq] : sort
+        }
+      }
+      return Post.findAll(option)
+    }
   }
   Post.init({
     UserId: DataTypes.INTEGER ,
