@@ -1,4 +1,6 @@
 'use strict';
+const bcrypt = require('bcryptjs')
+
 const {
   Model
 } = require('sequelize');
@@ -52,18 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       } 
      },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate :{
-        notEmpty:{
-          msg: `Role is Required.`
-        },
-        notNull: {
-          msg: `Role is Required.`
-        }
-      } 
-     },
+    role: DataTypes.STRING,
      profilePicture: DataTypes.STRING
   }, {
     sequelize,
@@ -71,9 +62,21 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.beforeCreate((User, options)=>{
+    User.role = 'User'
+  })
+
+  User.beforeCreate((User, options)=>{
     if(!User.profilePicture){
       User.profilePicture = "https://tinyurl.com/2fw6u9kh"
      }
   })
+
+  User.beforeCreate((User, options) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(User.password, salt);
+
+    User.password = hash;
+  })
+  
   return User; 
 };

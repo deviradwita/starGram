@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Controller = require('../controllers.js/controller')
-
+const session = require('express-session')
 
 router.get('/posts', Controller.renderPost);
 
